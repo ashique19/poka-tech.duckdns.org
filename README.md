@@ -54,7 +54,7 @@ There is no price, no testimonial, and no result metric on the site. “Book a c
 
 ## Screenshots
 
-Case-study images live under `public/images/work/zatca/` and `public/images/work/academia/`. Sample images live under `public/images/work/samples/`. Each entry in the config has `src`, `width`, `height`, and `caption` / `alt` in English and Arabic. The gallery is a keyboard lightbox (arrows, Esc, swipe, RTL-aware) and the thumbnails use `loading="lazy"`.
+Case-study images live under `public/images/work/zatca/` and `public/images/work/academia/`. Representative mockup galleries live under `public/images/works/{slug}/` (`thumb.webp`, per-screen desktop/mobile WebP, JPEG fallbacks, and lightbox strip thumbs). Each entry in `config/portfolio.php` has `src`, `width`, `height`, and bilingual `caption` / `alt`. The gallery is a keyboard lightbox (arrows, Esc, swipe, RTL-aware) with a screen strip; images use `loading="lazy"`, `srcset`, and explicit dimensions.
 
 To add or replace a shot:
 

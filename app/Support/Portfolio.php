@@ -76,14 +76,33 @@ class Portfolio
 
         foreach (config('portfolio.samples', []) as $slug => $sample) {
             $kind = $sample['kind'] ?? ['en' => '', 'ar' => ''];
-            $base = 'images/work/samples/'.$slug;
+            $screenshots = [];
+            foreach ($sample['screens'] ?? [] as $image) {
+                $screenshots[] = self::enrichShot($image, $kind);
+            }
+            $thumbPath = (string) ($sample['thumb'] ?? '');
+            $thumb = $thumbPath !== ''
+                ? self::enrichShot([
+                    'src' => $thumbPath,
+                    'width' => 640,
+                    'height' => 400,
+                    'caption' => [
+                        'en' => 'Representative mockup · '.self::text($kind, 'en'),
+                        'ar' => 'نموذج تمثيلي · '.self::text($kind, 'ar'),
+                    ],
+                    'alt' => [
+                        'en' => 'Representative mockup cover for '.self::text($kind, 'en').'. Not a client project.',
+                        'ar' => 'غلاف نموذج تمثيلي لـ '.self::text($kind, 'ar').'. ليس مشروع عميل.',
+                    ],
+                ], $kind)
+                : ($screenshots[0] ?? null);
+
             $samples[] = [
                 'slug' => $slug,
                 'kind' => $kind,
-                'screenshots' => [
-                    self::sampleShot($base.'-desktop.webp', 1440, 900, $kind, 'desktop'),
-                    self::sampleShot($base.'-mobile.webp', 390, 844, $kind, 'mobile'),
-                ],
+                'thumb' => $thumb,
+                'screenshots' => $screenshots,
+                'strips' => self::sampleStrips($slug, $screenshots),
             ];
         }
 
@@ -105,29 +124,85 @@ class Portfolio
     }
 
     /**
+     * @param  array<string, mixed>  $image
      * @param  array<string, string>  $kind
-     * @return array{src: string, width: int, height: int, caption: array{en: string, ar: string}, alt: array{en: string, ar: string}}
+     * @return array<string, mixed>
      */
-    private static function sampleShot(string $src, int $width, int $height, array $kind, string $device): array
+    private static function enrichShot(array $image, array $kind): array
     {
-        $deviceEn = $device === 'mobile' ? 'mobile' : 'desktop';
-        $deviceAr = $device === 'mobile' ? 'الجوال' : 'سطح المكتب';
-        $kindEn = self::text($kind, 'en');
-        $kindAr = self::text($kind, 'ar');
+        $src = (string) ($image['src'] ?? '');
+        $jpeg = preg_replace('/\.webp$/', '.jpg', $src) ?? $src;
+        $width = (int) ($image['width'] ?? 1440);
+        $height = (int) ($image['height'] ?? 900);
+        $caption = $image['caption'] ?? [
+            'en' => 'Representative mockup · '.self::text($kind, 'en'),
+            'ar' => 'نموذج تمثيلي · '.self::text($kind, 'ar'),
+        ];
+        $alt = $image['alt'] ?? [
+            'en' => self::text($caption, 'en').'. Not a client project.',
+            'ar' => self::text($caption, 'ar').'. ليس مشروع عميل.',
+        ];
+
+        $webpUrl = self::fileUrl($src);
+        $jpegUrl = is_file(public_path($jpeg)) ? asset($jpeg) : null;
+        $srcset = $webpUrl.' '.$width.'w';
+        if ($jpegUrl !== null) {
+            $srcset .= ', '.$jpegUrl.' '.$width.'w';
+        }
 
         return [
             'src' => $src,
+            'jpeg' => $jpegUrl !== null ? $jpeg : null,
             'width' => $width,
             'height' => $height,
-            'caption' => [
-                'en' => 'Representative mockup · '.$kindEn.' · '.$deviceEn,
-                'ar' => 'نموذج تمثيلي · '.$kindAr.' · '.$deviceAr,
-            ],
-            'alt' => [
-                'en' => 'Representative mockup of '.$kindEn.' on '.$deviceEn.'. Not a client project.',
-                'ar' => 'نموذج تمثيلي لـ '.$kindAr.' على '.$deviceAr.'. ليس مشروع عميل.',
-            ],
+            'caption' => $caption,
+            'alt' => $alt,
+            'srcset' => $srcset,
+            'sizes' => $width <= 400 ? '(max-width: 640px) 90vw, 320px' : '(max-width: 1024px) 100vw, 640px',
+            'screen' => self::screenIdFromSrc($src),
         ];
+    }
+
+    private static function fileUrl(string $relative): string
+    {
+        return is_file(public_path($relative)) ? asset($relative) : asset('images/work/placeholder.svg');
+    }
+
+    private static function screenIdFromSrc(string $src): string
+    {
+        $base = basename($src, '.webp');
+
+        return (string) preg_replace('/-(desktop|mobile)$/', '', $base);
+    }
+
+    /**
+     * @param  list<array<string, mixed>>  $screenshots
+     * @return list<array<string, mixed>>
+     */
+    private static function sampleStrips(string $slug, array $screenshots): array
+    {
+        $seen = [];
+        $strips = [];
+        foreach ($screenshots as $shot) {
+            $screen = (string) ($shot['screen'] ?? '');
+            if ($screen === '' || isset($seen[$screen])) {
+                continue;
+            }
+            $seen[$screen] = true;
+            $stripSrc = 'images/works/'.$slug.'/'.$screen.'-strip.webp';
+            if (! is_file(public_path($stripSrc))) {
+                continue;
+            }
+            $strips[] = [
+                'screen' => $screen,
+                'src' => $stripSrc,
+                'width' => 160,
+                'height' => 100,
+                'caption' => $shot['caption'] ?? ['en' => '', 'ar' => ''],
+            ];
+        }
+
+        return $strips;
     }
 
     public static function imageUrl(array $image): string

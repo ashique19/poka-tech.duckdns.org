@@ -25,5 +25,5 @@ Route::prefix('{locale}')
     });
 
 if (app()->environment(['local', 'testing'])) {
-    Route::get('/mockups/{slug}', [MockupController::class, 'show'])->name('mockups.show');
+    Route::get('/mockups/{slug}/{screen?}', [MockupController::class, 'show'])->name('mockups.show');
 }

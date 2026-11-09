@@ -114,6 +114,7 @@ return [
         'close' => 'إغلاق',
         'dialog' => 'لقطات الشاشة',
         'count' => ':current من :total',
+        'strip' => 'انتقل إلى الشاشة',
     ],
     'meta' => [
         'home_title' => 'Poka Tech — Laravel و Livewire لأعمال السعودية والخليج',
