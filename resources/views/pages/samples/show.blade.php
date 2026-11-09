@@ -18,7 +18,7 @@
             <h1 class="text-4xl font-semibold">{{ $kind }}</h1>
             <p class="max-w-3xl text-muted">{{ __('portfolio.samples.intro') }} {{ __('portfolio.samples.not_client') }}.</p>
         </header>
-        <x-screenshot-gallery :images="$sample['screenshots']" :id="'sample-'.$sample['slug']" />
+        <x-screenshot-gallery :images="$sample['screenshots']" :strips="$sample['strips'] ?? []" :id="'sample-'.$sample['slug']" />
         <a href="{{ route('home', ['locale' => $locale, 'project' => $sample['slug']]) }}#contact" class="inline-flex min-h-11 w-fit items-center bg-accent px-4 font-semibold text-white">{{ __('portfolio.services.quote') }}</a>
     </article>
 @endsection

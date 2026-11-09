@@ -19,10 +19,29 @@ function initLightbox(root) {
 
     const rtl = () => document.documentElement.dir === "rtl";
 
+    const stripButtons = [...root.querySelectorAll("[data-lightbox-strip-item]")];
+
+    const firstIndexForScreen = (screenId) => {
+        if (!screenId) {
+            return 0;
+        }
+        const hit = triggers.findIndex((t) => t.dataset.screen === screenId);
+        return hit >= 0 ? hit : 0;
+    };
+
+    const highlightStrip = () => {
+        const screen = triggers[index]?.dataset.screen || "";
+        stripButtons.forEach((btn) => {
+            const active = btn.dataset.screen === screen;
+            btn.classList.toggle("ring-2", active);
+            btn.classList.toggle("ring-accent", active);
+        });
+    };
+
     const show = (nextIndex) => {
         index = Math.max(0, Math.min(triggers.length - 1, nextIndex));
         const trigger = triggers[index];
-        image.src = trigger.dataset.src || "";
+        image.src = trigger.dataset.src || trigger.dataset.jpeg || "";
         image.alt = trigger.dataset.alt || "";
         if (trigger.dataset.srcset) {
             image.srcset = trigger.dataset.srcset;
@@ -47,7 +66,14 @@ function initLightbox(root) {
         if (next) {
             next.disabled = index === triggers.length - 1;
         }
+        highlightStrip();
     };
+
+    stripButtons.forEach((btn) => {
+        btn.addEventListener("click", () => {
+            show(firstIndexForScreen(btn.dataset.screen || ""));
+        });
+    });
 
     const open = (trigger) => {
         lastTrigger = trigger;

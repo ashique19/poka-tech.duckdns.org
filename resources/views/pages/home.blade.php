@@ -62,16 +62,17 @@
             <div class="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
                 @foreach ($samples as $sample)
                     <article class="grid gap-3 border border-line p-4" aria-labelledby="sample-{{ $sample['slug'] }}">
-                        @php $cover = $sample['screenshots'][0] ?? null; @endphp
+                        @php $cover = $sample['thumb'] ?? ($sample['screenshots'][0] ?? null); @endphp
                         @if ($cover)
                             <img
                                 src="{{ Portfolio::imageUrl($cover) }}"
-                                alt=""
+                                @if (! empty($cover['srcset'])) srcset="{{ $cover['srcset'] }}" sizes="(max-width: 1024px) 50vw, 320px" @endif
+                                alt="{{ Portfolio::text($cover['alt'] ?? '') }}"
                                 width="{{ $cover['width'] }}"
                                 height="{{ $cover['height'] }}"
                                 loading="lazy"
                                 decoding="async"
-                                class="max-h-40 w-full bg-white object-cover object-top"
+                                class="aspect-[16/10] w-full bg-white object-cover object-top"
                             >
                         @endif
                         <p class="text-xs font-semibold uppercase tracking-wide text-accent">{{ __('portfolio.samples.badge') }}</p>
