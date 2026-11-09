@@ -1,0 +1,101 @@
+@import "tailwindcss";
+@import "@fontsource/ibm-plex-sans/latin-400.css";
+@import "@fontsource/ibm-plex-sans/latin-600.css";
+@import "@fontsource/ibm-plex-sans-arabic/arabic-400.css";
+@import "@fontsource/ibm-plex-sans-arabic/arabic-600.css";
+
+/*
+ * Accent is the only chromatic color. Neutrals stay put.
+ * Switch the accent by setting data-theme (config portfolio.theme).
+ */
+@theme {
+    --color-accent: #0f5f58;
+    --color-ink: #1c1917;
+    --color-paper: #f7f4ee;
+    --color-muted: #5c564c;
+    --color-line: #e4dcd0;
+    --font-sans: "IBM Plex Sans", "IBM Plex Sans Arabic", ui-sans-serif, system-ui, sans-serif;
+}
+
+[data-theme="theme-2"] {
+    --color-accent: #1e3a8a;
+}
+
+[data-theme="theme-3"] {
+    --color-accent: #7c2d12;
+}
+
+@layer base {
+    html {
+        color-scheme: light;
+        background: var(--color-paper);
+        color: var(--color-ink);
+        scroll-behavior: smooth;
+    }
+
+    body {
+        font-family: var(--font-sans);
+        text-rendering: optimizeLegibility;
+    }
+
+    :focus-visible {
+        outline: 2px solid var(--color-ink);
+        outline-offset: 3px;
+    }
+
+    [id] {
+        scroll-margin-top: 5.5rem;
+    }
+
+    summary {
+        list-style: none;
+    }
+
+    summary::-webkit-details-marker {
+        display: none;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    html {
+        scroll-behavior: auto;
+    }
+}
+
+.skip-link {
+    position: absolute;
+    inset-inline-start: 1rem;
+    top: 0.75rem;
+    z-index: 60;
+    transform: translateY(-150%);
+    background: var(--color-ink);
+    color: white;
+    padding: 0.75rem 1rem;
+}
+
+.skip-link:focus {
+    transform: none;
+}
+
+.lightbox {
+    width: min(100vw - 1.5rem, 72rem);
+    max-height: calc(100vh - 1.5rem);
+    margin: auto;
+    overflow: auto;
+    border: 0;
+    padding: 0;
+    background: var(--color-paper);
+    color: var(--color-ink);
+}
+
+.lightbox::backdrop {
+    background: rgb(28 25 23 / 0.82);
+}
+
+.honeypot {
+    position: absolute;
+    inset-inline-start: -9999px;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+}
