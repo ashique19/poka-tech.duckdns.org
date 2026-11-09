@@ -24,7 +24,7 @@ const captures = {
     erp: ["hub", "purchasing", "inventory", "finance"],
     ecommerce: ["shop", "product", "checkout", "orders"],
     android: ["home", "orders", "scan", "profile"],
-    game: ["play", "menu", "scores", "settings"],
+    game: ["play", "menu", "scores"],
 };
 
 const desktopOnlyAndroid = true;
