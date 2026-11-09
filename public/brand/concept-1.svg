@@ -1,0 +1,5 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 168 36" role="img" aria-label="Poka Tech">
+  <rect x="0" y="2" width="32" height="32" rx="8" fill="currentColor"/>
+  <text x="16" y="24" text-anchor="middle" fill="#F7F4EE" font-family="IBM Plex Sans, sans-serif" font-size="18" font-weight="600">P</text>
+  <text x="42" y="24" fill="currentColor" font-family="IBM Plex Sans, sans-serif" font-size="18" font-weight="600">Poka Tech</text>
+</svg>
