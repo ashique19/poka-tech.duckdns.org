@@ -2,7 +2,7 @@
 
 Studio site for [Poka Tech](https://poka-tech.duckdns.org), Ashiqul Islam’s product studio. The current web work is Laravel and Livewire, in English and Arabic, for businesses in Saudi Arabia and the Gulf.
 
-The visual identity is **provisional**. Logo concept 1 and theme 1 are the defaults. Change one config value when a direction is chosen (see below).
+The brand choice is **final**: logo **concept 2** (POKA bar wordmark) and **theme 2** (indigo `#1E3A8A`). Concepts 1 and 3 and themes 1 and 3 stay in the repo for reference but are not the defaults.
 
 ## Local setup
 
@@ -42,8 +42,8 @@ The header switches language and keeps the query string, so a prefilled contact 
 
 `config/portfolio.php` is the content file:
 
-- `theme` — `theme-1` (teal `#0F5F58`), `theme-2` (indigo `#1E3A8A`), or `theme-3` (clay `#7C2D12`). This one value changes the accent. Neutrals stay the same. The token is `--color-accent` in `resources/css/app.css`.
-- `logo` — `concept-1`, `concept-2`, or `concept-3`. SVG files are in `public/brand/`.
+- `theme` — default `theme-2` (indigo `#1E3A8A`). Alternatives: `theme-1` (teal), `theme-3` (clay). One value changes the accent; the token is `--color-accent` in `resources/css/app.css`.
+- `logo` — default `concept-2`. Alternatives: `concept-1`, `concept-3`. SVG files are in `public/brand/`.
 - `case_studies` — problem, what was built, stack, notes, optional `demo_url`, screenshot list.
 - `samples` — representative mockup categories. They are not client projects.
 - `contact.whatsapp` and `contact.email` come from `WHATSAPP_NUMBER` and `CONTACT_EMAIL`.
@@ -80,10 +80,11 @@ Livewire form: name, email, optional company, message. A honeypot field and a li
 
 | File | What it is |
 | --- | --- |
-| `public/brand/concept-1.svg` | Monogram P plus wordmark (default) |
-| `public/brand/concept-2.svg` | Wordmark with a bar under POKA |
-| `public/brand/concept-3.svg` | Circular PT monogram plus wordmark |
-| `public/favicon.svg` | Provisional tab icon, same P as concept 1 |
+| `public/brand/concept-1.svg` | Monogram P plus wordmark (alternate) |
+| `public/brand/concept-2.svg` | Wordmark with a bar under POKA (**default**) |
+| `public/brand/concept-3.svg` | Circular PT monogram plus wordmark (alternate) |
+| `public/favicon.svg` | Tab icon in indigo, concept 2 mark |
+| `public/images/og.png` | Open Graph image, indigo accent, concept 2 |
 
 The Latin wordmark is drawn left-to-right inside the SVG so Arabic pages do not reorder the letters. `currentColor` follows the accent theme.
 

@@ -6,7 +6,7 @@
 |
 | theme: theme-1 | theme-2 | theme-3   (one switch for the accent)
 | logo:  concept-1 | concept-2 | concept-3
-| Both are provisional. See the README.
+| Default brand: concept-2 + theme-2 (indigo). See the README.
 |
 | Do not add prices, testimonials, client logos, or result metrics.
 | WhatsApp and the contact mailbox come from the environment.
@@ -42,9 +42,9 @@ return [
 
     'locales' => ['en', 'ar'],
 
-    // Provisional until the owner picks. One value switches the accent.
-    'theme' => env('PORTFOLIO_THEME', 'theme-1'),
-    'logo' => env('PORTFOLIO_LOGO', 'concept-1'),
+    // Default accent theme (indigo). One value switches the accent.
+    'theme' => env('PORTFOLIO_THEME', 'theme-2'),
+    'logo' => env('PORTFOLIO_LOGO', 'concept-2'),
 
     'themes' => [
         'theme-1' => ['label' => 'Teal', 'accent' => '#0F5F58'],

@@ -22,7 +22,8 @@ class SiteTest extends TestCase
         $response->assertOk();
         $response->assertSee('lang="en"', false);
         $response->assertSee('dir="ltr"', false);
-        $response->assertSee('data-theme="theme-1"', false);
+        $response->assertSee('data-theme="theme-2"', false);
+        $response->assertSee('brand/concept-2.svg', false);
         $response->assertSee('Laravel and Livewire products for Saudi and Gulf businesses.', false);
         $response->assertSee('See work', false);
         $response->assertSee('Get a quote', false);

@@ -17,8 +17,8 @@ abstract class TestCase extends BaseTestCase
             'app.url' => 'https://poka-tech.duckdns.org',
             'portfolio.contact.whatsapp' => '8801785636359',
             'portfolio.contact.email' => 'ashique19@gmail.com',
-            'portfolio.theme' => 'theme-1',
-            'portfolio.logo' => 'concept-1',
+            'portfolio.theme' => 'theme-2',
+            'portfolio.logo' => 'concept-2',
         ]);
 
         URL::forceRootUrl('https://poka-tech.duckdns.org');

@@ -253,7 +253,7 @@ class Portfolio
             'theme',
             'preview_theme',
             array_keys(config('portfolio.themes', [])),
-            'theme-1',
+            'theme-2',
         );
     }
 
@@ -263,7 +263,7 @@ class Portfolio
             'logo',
             'preview_logo',
             config('portfolio.logos', []),
-            'concept-1',
+            'concept-2',
         );
     }
 
